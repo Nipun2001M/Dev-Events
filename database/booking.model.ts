@@ -38,7 +38,7 @@ const BookingSchema = new Schema<IBooking>(
 );
 
 // Pre-save hook to validate events exists before creating booking
-BookingSchema.pre("save", async function (next: any) {
+BookingSchema.pre("save", async function (next) {
   const booking = this as IBooking;
 
   // Only validate eventId if it's new or modified
@@ -51,18 +51,17 @@ BookingSchema.pre("save", async function (next: any) {
           `Event with ID ${booking.eventId} does not exist`
         );
         error.name = "ValidationError";
-        return next(error);
+      
       }
     } catch {
       const validationError = new Error(
         "Invalid events ID format or database error"
       );
       validationError.name = "ValidationError";
-      return next(validationError);
+      
     }
   }
 
-  next();
 });
 
 // Create index on eventId for faster queries

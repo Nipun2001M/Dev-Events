@@ -10,7 +10,7 @@ type MongooseCache = {
 declare global {
   // eslint-disable-next-line no-var
   var mongoose: MongooseCache | undefined;
-}
+} 
 
 const MONGODB_URI = process.env.MONGODB_URI;
 
