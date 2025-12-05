@@ -10,8 +10,8 @@ const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 const Page = async() => {
   'use cache'
   cacheLife('hours')
-  const resposne =await fetch(`${BASE_URL}/api/events`)
-  const  {events}=await resposne.json()
+  // const resposne =await fetch(`${BASE_URL}/api/events`)
+  // const  {events}=await resposne.json()
   console.log("console");
   return (
     <section>
@@ -27,12 +27,11 @@ const Page = async() => {
         <h3>Featured Events</h3>
 
         <ul className="events">
-          {events && events.length>0  && events.map((event:IEvent) => (
-            <EventCard
-            key={event._id.toString()}
-              {...event}
-            />
-          ))}
+          {events &&
+            events.length > 0 &&
+            events.map((event) => (
+              <EventCard key={event._id} {...(event as unknown as IEvent)} />
+            ))}
         </ul>
       </div>
     </section>
