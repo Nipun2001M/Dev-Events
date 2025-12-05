@@ -2,6 +2,7 @@ import BookEvent from "@/components/BookEvent";
 import EventCard from "@/components/EventCard";
 import { IEvent } from "@/database";
 import { getSimilarEventsBySlug } from "@/lib/actions/event.actions";
+import { cacheLife } from "next/cache";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import React from "react";
@@ -48,6 +49,8 @@ const EventDetailsPage = async ({
 }: {
   params: Promise<{ slug: string }>;
 }) => {
+  "use cache";
+  cacheLife("hours");
   const { slug } = await params;
   const request = await fetch(`${BASE_URL}/api/events/${slug}`);
   const {
@@ -63,12 +66,12 @@ const EventDetailsPage = async ({
       audience,
       tags,
       organizer,
+      _id,
     },
   } = await request.json();
   if (!description) return notFound();
   const bookings = 10;
-  const similarEvents:IEvent[]=await getSimilarEventsBySlug(slug)
-
+  const similarEvents: IEvent[] = await getSimilarEventsBySlug(slug);
 
   return (
     <section id="event">
@@ -117,21 +120,18 @@ const EventDetailsPage = async ({
             ) : (
               <p className="text-sm">Be First To Book Your Spot</p>
             )}
-            <BookEvent/>
+            <BookEvent eventId={_id} slug={slug} />
           </div>
         </aside>
       </div>
       <div className="flex w-full flex-col gap-4 pt-20">
         <h2>Similar Events</h2>
         <div className="events">
-            {
-                similarEvents.length>0 && similarEvents.map((similarEvent:IEvent)=>(
-                    <EventCard key={similarEvent._id.toString()} {...similarEvent}/>
-                ))
-            }
-
+          {similarEvents.length > 0 &&
+            similarEvents.map((similarEvent: IEvent) => (
+              <EventCard key={similarEvent._id.toString()} {...similarEvent} />
+            ))}
         </div>
-
       </div>
     </section>
   );
