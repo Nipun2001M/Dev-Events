@@ -1,0 +1,1 @@
+{"stdout":"","stderr":"npm error code ENETUNREACH\nnpm error syscall connect\nnpm error errno ENETUNREACH\nnpm error request to https://registry.npmjs.org/posthog-js failed, reason: connect ENETUNREACH 104.16.27.34:443\nnpm error A complete log of this run can be found in: C:\\Users\\nipun\\AppData\\Local\\npm-cache\\_logs\\2025-12-05T07_03_30_854Z-debug-0.log\n"}
