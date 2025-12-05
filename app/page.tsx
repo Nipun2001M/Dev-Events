@@ -1,9 +1,9 @@
 import EventCard from "@/components/EventCard";
 import Explorebtn from "@/components/Explorebtn";
 import { IEvent } from "@/database";
-import { events } from "@/lib/constants";
 import { cacheLife } from "next/cache";
 import React from "react";
+import { events } from "@/lib/constants";
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
